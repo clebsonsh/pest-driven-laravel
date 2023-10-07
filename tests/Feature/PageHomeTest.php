@@ -14,7 +14,7 @@ it('shows courses overview', function () {
     ];
 
     foreach ($courses as $course) {
-        Course::factory()->create($course);
+        Course::factory()->create([...$course, 'released_at' => now()]);
     }
 
     // Act & Assert
@@ -23,16 +23,18 @@ it('shows courses overview', function () {
 
 it('shows only released courses', function () {
     // Arrange
+    Course::factory()->create(['title' => 'Course A', 'released_at' => now()->subDay()]);
+    Course::factory()->create(['title' => 'Course B']);
 
-    // Act
-
-    // Assert
+    // Act & Assert
+    get(route('home'))->assertSeeText('Course A')->assertDontSeeText('Course B');
 });
 
 it('shows courses by release date', function () {
     // Arrange
+    Course::factory()->create(['title' => 'Course A', 'released_at' => now()->subDay()]);
+    Course::factory()->create(['title' => 'Course B', 'released_at' => now()]);
 
-    // Act
-
-    // Assert
+    // Act & Assert
+    get(route('home'))->assertSeeInOrder(['Course B', 'Course A']);
 });

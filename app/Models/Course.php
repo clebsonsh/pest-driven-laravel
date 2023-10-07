@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
+
+    public function scopeReleased($query)
+    {
+        return $query->whereNotNull('released_at');
+    }
 }
