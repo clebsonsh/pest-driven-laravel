@@ -7,34 +7,42 @@ uses(RefreshDatabase::class);
 
 it('shows courses overview', function () {
     // Arrange
-    $courses = [
-        ['title' => 'Course A', 'description' => 'Description A'],
-        ['title' => 'Course B', 'description' => 'Description B'],
-        ['title' => 'Course C', 'description' => 'Description C']
-    ];
+    $courses = Course::factory()
+        ->released()
+        ->count(3)
+        ->create()
+        ->map->only(['title', 'description'])
+        ->values();
 
-    foreach ($courses as $course) {
-        Course::factory()->create([...$course, 'released_at' => now()]);
-    }
-
-    // Act & Assert
     get(route('home'))->assertSeeText(...$courses);
 });
 
 it('shows only released courses', function () {
     // Arrange
-    Course::factory()->create(['title' => 'Course A', 'released_at' => now()->subDay()]);
-    Course::factory()->create(['title' => 'Course B']);
+    $releasedCourse = Course::factory()
+        ->released()
+        ->create();
+    $notReleasedCourse = Course::factory()->create();
 
     // Act & Assert
-    get(route('home'))->assertSeeText('Course A')->assertDontSeeText('Course B');
+    get(route('home'))
+        ->assertSeeText($releasedCourse->title)
+        ->assertDontSeeText($notReleasedCourse->title);
 });
 
 it('shows courses by release date', function () {
     // Arrange
-    Course::factory()->create(['title' => 'Course A', 'released_at' => now()->subDay()]);
-    Course::factory()->create(['title' => 'Course B', 'released_at' => now()]);
+    $releasedCourse = Course::factory()
+        ->released(now()->subDay())
+        ->create();
+    $latestReleasedCourse = Course::factory()
+        ->released()
+        ->create();
 
     // Act & Assert
-    get(route('home'))->assertSeeInOrder(['Course B', 'Course A']);
+    get(route('home'))
+        ->assertSeeInOrder([
+            $latestReleasedCourse->title,
+            $releasedCourse->title
+        ]);
 });
