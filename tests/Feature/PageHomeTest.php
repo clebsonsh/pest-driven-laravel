@@ -16,6 +16,7 @@ it('shows courses overview', function () {
         ->map->only(['title', 'description'])
         ->values();
 
+    // Act & Assert
     get(route('home'))->assertSeeText(...$courses);
 });
 
