@@ -17,7 +17,9 @@ it('shows courses overview', function () {
         ->values();
 
     // Act & Assert
-    get(route('home'))->assertSeeText(...$courses);
+    get(route('home'))
+        ->assertOk()
+        ->assertSeeText(...$courses);
 });
 
 it('shows only released courses', function () {
@@ -29,6 +31,7 @@ it('shows only released courses', function () {
 
     // Act & Assert
     get(route('home'))
+        ->assertOk()
         ->assertSeeText($releasedCourse->title)
         ->assertDontSeeText($notReleasedCourse->title);
 });
@@ -44,6 +47,7 @@ it('shows courses by release date', function () {
 
     // Act & Assert
     get(route('home'))
+        ->assertOk()
         ->assertSeeInOrder([
             $latestReleasedCourse->title,
             $releasedCourse->title,
