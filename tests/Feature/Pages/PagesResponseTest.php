@@ -9,7 +9,7 @@ uses(RefreshDatabase::class);
 
 it('returns a successful response for home page', function () {
     // Act & Assert
-    get(route('home'))->assertOk();
+    get(route('pages.home'))->assertOk();
 });
 
 it('returns a successful response for course details page', function () {
@@ -17,5 +17,5 @@ it('returns a successful response for course details page', function () {
     $course = Course::factory()->released()->create();
 
     // Act & Assert
-    get(route('course-details', $course))->assertOk();
+    get(route('pages.course-details', $course))->assertOk();
 });

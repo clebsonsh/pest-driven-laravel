@@ -13,7 +13,7 @@ class PageHomeController extends Controller
      */
     public function __invoke(Request $request): View
     {
-        return view('home', [
+        return view('pages.home', [
             'courses' => Course::query()
                 ->released()
                 ->latest('released_at')

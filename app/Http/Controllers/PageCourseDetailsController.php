@@ -14,8 +14,8 @@ class PageCourseDetailsController extends Controller
     {
         if (!$course->released_at) abort(404);
 
-        return view('course-details', [
-            'course' => $course,
+        return view('pages.course-details', [
+            'course' => $course->loadCount('videos'),
         ]);
     }
 }
