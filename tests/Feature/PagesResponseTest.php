@@ -14,7 +14,7 @@ it('returns a successful response for home page', function () {
 
 it('returns a successful response for course details page', function () {
     // Arrange
-    $course = Course::factory()->create();
+    $course = Course::factory()->released()->create();
 
     // Act & Assert
     get(route('course-details', $course))->assertOk();

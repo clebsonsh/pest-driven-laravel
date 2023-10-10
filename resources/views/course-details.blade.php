@@ -7,4 +7,4 @@
         <li>{{ $learning }}</li>
     @endforeach
 </ul>
-<img src="{{ $course->image }}" />
+<img src="{{ asset("images/{$course->image_name}") }}" />
