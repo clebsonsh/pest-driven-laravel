@@ -8,7 +8,7 @@
 
 ## Member can
 
--   [ ] log in (page)
+-   [x] log in (page)
 -   [x] see purchased courses (page)
 -   [ ] watch purchased courses (page)
 
