@@ -27,7 +27,7 @@ jobs:
         run: |
           mkdir -p database
           touch database/database.sqlite
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
       - name: Compile assets
