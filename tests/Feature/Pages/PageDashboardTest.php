@@ -39,18 +39,51 @@ it('list purchased courses', function () {
 
 it('does not list other courses', function () {
     // Arrange
+    $user = User::factory()->create();
+    $course = Course::factory()->create();
 
-    // Act & Assert
+    // Act
+    $this->actingAs($user);
+
+    // Assert
+    get(route('dashboard'))
+        ->assertOk()
+        ->assertDontSeeText($course->title);
 });
 
 it('show latest purchased course first', function () {
     // Arrange
+    $user = User::factory()->create();
+    $firstPurchasedCourse = Course::factory()->create();
+    $lastPurchasedCourse = Course::factory()->create();
 
-    // Act & Assert
+    $user->courses()->attach($firstPurchasedCourse, ['created_at' => now()->subDay()]);
+    $user->courses()->attach($lastPurchasedCourse, ['created_at' => now()]);
+
+    // Act
+    $this->actingAs($user);
+
+    // Assert
+    get(route('dashboard'))
+        ->assertOk()
+        ->assertSeeTextInOrder([
+            $lastPurchasedCourse->title,
+            $firstPurchasedCourse->title,
+        ]);
 });
 
-it('includes a link to product videos', function () {
+it('includes a link to courses videos', function () {
     // Arrange
+    $user = User::factory()
+        ->has(Course::factory())
+        ->create();
 
-    // Act & Assert
+    // Act
+    $this->actingAs($user);
+
+    // Assert
+    get(route('dashboard'))
+        ->assertOk()
+        ->assertSeeText('Watch videos')
+        ->assertSee(route('pages.course-videos', Course::first()));
 });

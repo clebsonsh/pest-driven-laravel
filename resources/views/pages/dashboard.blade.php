@@ -12,6 +12,7 @@
                     @forelse ($purchasedCourses as $purchasedCourse)
                         <li>
                             <p>{{ $purchasedCourse->title }}</p>
+                            <a href="{{ route('pages.course-videos', $purchasedCourse) }}">Watch videos</a>
                         </li>
                     @empty
                         <li>
