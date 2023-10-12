@@ -17,15 +17,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', PageHomeController::class)->name('pages.home');
+Route::name('pages.')->group(function () {
+    Route::get('/', PageHomeController::class)->name('home');
 
-Route::get('/courses/{course:slug}', PageCourseDetailsController::class)->name('pages.course-details');
+    Route::get('/courses/{course:slug}', PageCourseDetailsController::class)->name('course-details');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', PageDashboardController::class)->name('dashboard');
-    Route::get('/videos/{course:slug}', PageVideosController::class)->name('pages.course-videos');
+    Route::middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ])->group(function () {
+        Route::get('/dashboard', PageDashboardController::class)->name('dashboard');
+        Route::get('/videos/{course:slug}', PageVideosController::class)->name('course-videos');
+    });
 });

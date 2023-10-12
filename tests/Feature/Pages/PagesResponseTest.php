@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function Pest\Laravel\get;
 
-uses(RefreshDatabase::class);
 
 it('returns a successful response for home page', function () {
     // Act & Assert
@@ -22,10 +21,7 @@ it('returns a successful response for course details page', function () {
 });
 
 it('returns a successful response for dashboard page', function () {
-    // Arrange
-    $user = User::factory()->create();
-
-    $this->actingAs($user);
-    // Act & Assert
-    get(route('dashboard'))->assertOk();
+    // Arrange, Act & Assert
+    loginAsUser();
+    get(route('pages.dashboard'))->assertOk();
 });
