@@ -28,6 +28,6 @@ Route::name('pages.')->group(function () {
         'verified',
     ])->group(function () {
         Route::get('/dashboard', PageDashboardController::class)->name('dashboard');
-        Route::get('/videos/{course:slug}', PageVideosController::class)->name('course-videos');
+        Route::get('/videos/{course:slug}/{video:slug?}', PageVideosController::class)->name('course-videos');
     });
 });

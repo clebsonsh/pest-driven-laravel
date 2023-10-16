@@ -17,7 +17,8 @@ class VideoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->sentence,
+            'slug' => fake()->slug,
         ];
     }
 }

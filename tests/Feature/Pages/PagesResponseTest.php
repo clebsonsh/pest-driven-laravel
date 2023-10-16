@@ -1,11 +1,9 @@
 <?php
 
 use App\Models\Course;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Video;
 
 use function Pest\Laravel\get;
-
 
 it('returns a successful response for home page', function () {
     // Act & Assert
@@ -29,4 +27,16 @@ it('returns a successful response for dashboard page', function () {
 it('does not find JetStream registration page', function () {
     // Act & Assert
     get('register')->assertNotFound();
+});
+
+it('gives successful response for videos page', function () {
+    // Arrange
+    $course = Course::factory()
+        ->has(Video::factory())
+        ->create();
+
+    // Act & Assert
+    loginAsUser();
+    get(route('pages.course-videos', $course))
+        ->assertOk();
 });
