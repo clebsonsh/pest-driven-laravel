@@ -10,7 +10,7 @@
 
 -   [x] log in (page)
 -   [x] see purchased courses (page)
--   [ ] watch purchased courses (page)
+-   [x] watch purchased courses (page)
 
 ## Admin can
 

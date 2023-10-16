@@ -17,8 +17,11 @@ class VideoFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence,
             'slug' => fake()->slug,
+            'vimeo_id' => fake()->uuid(),
+            'title' => fake()->sentence,
+            'description' => fake()->paragraph,
+            'duration' => fake()->numberBetween(1, 99),
         ];
     }
 }
