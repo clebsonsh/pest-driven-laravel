@@ -61,6 +61,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get the videos that he user has watched
+     */
+    public function videos(): BelongsToMany
+    {
+        return $this->belongsToMany(Video::class, 'watched_videos')
+            ->withTimestamps();
+    }
+
+    /**
      * Get the courses that the user has purchased.
      */
     public function courses(): BelongsToMany
