@@ -23,11 +23,11 @@ class VideoPlayer extends Component
 
     public function maskVideoAsCompleted(): void
     {
-        auth()->user()->videos()->attach($this->video);
+        auth()->user()->watchedVideos()->attach($this->video);
     }
 
     public function maskVideoAsNotCompleted(): void
     {
-        auth()->user()->videos()->detach($this->video);
+        auth()->user()->watchedVideos()->detach($this->video);
     }
 }

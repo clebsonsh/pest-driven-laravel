@@ -12,7 +12,7 @@ class PageDashboardController extends Controller
     public function __invoke(): View
     {
         return view('pages.dashboard', [
-            'purchasedCourses' => auth()->user()->courses,
+            'purchasedCourses' => auth()->user()->purchasedCourses,
         ]);
     }
 }

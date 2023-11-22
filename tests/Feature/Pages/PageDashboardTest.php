@@ -22,6 +22,7 @@ it('list purchased courses', function () {
             Course::factory()
                 ->count(2)
                 ->state(new Sequence(...$courseData)),
+            'purchasedCourses'
         )
         ->create();
 
@@ -53,8 +54,8 @@ it('show latest purchased course first', function () {
     $firstPurchasedCourse = Course::factory()->create();
     $lastPurchasedCourse = Course::factory()->create();
 
-    $user->courses()->attach($firstPurchasedCourse, ['created_at' => now()->subDay()]);
-    $user->courses()->attach($lastPurchasedCourse, ['created_at' => now()]);
+    $user->purchasedCourses()->attach($firstPurchasedCourse, ['created_at' => now()->subDay()]);
+    $user->purchasedCourses()->attach($lastPurchasedCourse, ['created_at' => now()]);
 
     // Act
     loginAsUser($user);
@@ -71,7 +72,7 @@ it('show latest purchased course first', function () {
 it('includes a link to courses videos', function () {
     // Arrange
     $user = User::factory()
-        ->has(Course::factory())
+        ->has(Course::factory(), 'purchasedCourses')
         ->create();
 
     // Act
