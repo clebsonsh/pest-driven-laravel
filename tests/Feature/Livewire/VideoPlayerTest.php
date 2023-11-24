@@ -60,7 +60,7 @@ it('does not include route for current vido', function () {
         ->assertDontSeeHtml(route('pages.course-videos', $course->videos[0]));
 });
 
-it('mask video as completed', function () {
+it('mark video as completed', function () {
     // Arrange
     $user = User::factory()->create();
     $course = createCourseAndVideo();
@@ -71,9 +71,11 @@ it('mask video as completed', function () {
 
     //Act & Assert
     loginAsUser($user);
-    Livewire::test(VideoPlayer::class, [
-        'video' => $course->videos()->first(),
-    ])->call('maskVideoAsCompleted');
+    Livewire::test(VideoPlayer::class, ['video' => $course->videos()->first()])
+        ->assertMethodWired('maskVideoAsCompleted')
+        ->call('maskVideoAsCompleted')
+        ->assertMethodNotWired('maskVideoAsCompleted')
+        ->assertMethodWired('maskVideoAsNotCompleted');
 
     //Assert
     $user->refresh();
@@ -95,9 +97,11 @@ it('mask video as not completed', function () {
 
     //Act & Assert
     loginAsUser($user);
-    Livewire::test(VideoPlayer::class, [
-        'video' => $course->videos()->first(),
-    ])->call('maskVideoAsNotCompleted');
+    Livewire::test(VideoPlayer::class, ['video' => $course->videos()->first()])
+        ->assertMethodWired('maskVideoAsNotCompleted')
+        ->call('maskVideoAsNotCompleted')
+        ->assertMethodNotWired('maskVideoAsNotCompleted')
+        ->assertMethodWired('maskVideoAsCompleted');
 
     //Assert
     $user->refresh();
