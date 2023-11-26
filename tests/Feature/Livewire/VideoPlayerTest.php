@@ -49,8 +49,8 @@ it('show list of all course videos', function () {
         ->assertSee(
             $course->videos->pluck('title')->toArray()
         )->assertSeeHtml([
-            route('pages.course-videos', $course->videos[1]),
-            route('pages.course-videos', $course->videos[2]),
+            route('pages.course-videos', [$course, $course->videos[1]]),
+            route('pages.course-videos', [$course, $course->videos[2]]),
         ]);
 });
 
