@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'paddle' => [
+        'vendor_id' => env('PADDLE_VENDOR_ID'),
+    ],
+
 ];

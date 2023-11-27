@@ -8,3 +8,10 @@
     @endforeach
 </ul>
 <img src="{{ asset("images/{$course->image_name}") }}" />
+<a href="#" class="paddle_button" data-product="{{ $course->paddle_product_id }}">Buy Now</a>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script type="text/javascript">
+    Paddle.Setup({
+        vendor: {{ config('services.paddle.vendor_id') }}
+    });
+</script>
