@@ -18,7 +18,7 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            'paddle_product_id' => fake()->numberBetween(10000, 99999),
+            'paddle_product_id' => fake()->uuid(),
             'tagline' => fake()->sentence,
             'slug' => fake()->slug,
             'title' => fake()->sentence,
